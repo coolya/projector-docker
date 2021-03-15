@@ -20,7 +20,7 @@
 
 THIS_FILE_NAME=$(basename "$0")
 
-ideRunnerCandidates=($(grep -lr --include=*.sh com.intellij.idea.Main .))
+ideRunnerCandidates=($(grep -lr --include=*.sh jetbrains.mps.Launcher .))
 
 # remove this file from candidates:
 for i in "${!ideRunnerCandidates[@]}"; do
@@ -54,7 +54,7 @@ sed -i 's+classpath "$CLASSPATH"+classpath "$CLASSPATH:$IDE_HOME/projector-serve
 # com.intellij.idea.Main
 # to
 # -Dorg.jetbrains.projector.server.classToLaunch=com.intellij.idea.Main org.jetbrains.projector.server.ProjectorLauncher
-sed -i 's+com.intellij.idea.Main+-Dorg.jetbrains.projector.server.classToLaunch=com.intellij.idea.Main org.jetbrains.projector.server.ProjectorLauncher+g' "$IDE_RUN_FILE_NAME-projector.sh"
+sed -i 's+\${MAIN_CLASS}+\"-Dorg.jetbrains.projector.server.classToLaunch=jetbrains.mps.Launcher\" org.jetbrains.projector.server.ProjectorLauncher+g' "mps-projector.sh"
 
 bash "$IDE_RUN_FILE_NAME-projector.sh"
 
